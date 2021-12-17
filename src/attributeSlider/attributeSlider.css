@@ -1,0 +1,27 @@
+.label{
+    display: flex;
+  align-items: left;
+}
+.box{
+    display: flex;
+  align-items: right;
+}
+.slider{
+    max-width: 50px;
+    background: aliceblue;
+    
+    }
+.table-container{
+    font-size: 20px;
+    width: 350px;
+    background: linear-gradient(90deg, #5b5177 0%, #c77373 100%);
+    text-indent: 20px;
+    letter-spacing: 1px;
+    color:white;
+    font-family: "Times New Roman", Times, serif;
+    
+    
+ }
+ .checkboxtable{
+   font-size: '400px';
+ }
