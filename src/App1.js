@@ -10,17 +10,19 @@ import {Progress} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
         data: null,
         databaseAttributes: null,
-        isAttributeListPassed: false
+        isAttributeListPassed: false,
+        uploaded: false
     }
 
   }
+
+  //ece
   onChangeHandler=event=>{
     var files = event.target.files
     //if(this.maxSelectFile(event) && this.checkMimeType(event) && this.checkFileSize(event)){ 
@@ -32,15 +34,12 @@ class App extends React.Component{
 }
 
   onClickHandler = () => {
-    let data1 =[]
-    data1 = new FormData()
+    const data = new FormData()
     for(var x = 0; x<this.state.selectedFile.length; x++) {
-        data1.append('file', this.state.selectedFile[x])
+        data.append('file', this.state.selectedFile[x])
     }
-    console.log("data111===")
-    console.log(data1)
     
-   axios.post("http://localhost:3001/faces/api/v1/upload", data1, {
+   axios.post("http://localhost:3001/faces/api/v1/upload", data, {
          onUploadProgress: ProgressEvent => {
            this.setState({
              loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
@@ -55,6 +54,7 @@ class App extends React.Component{
       toast.error('upload fail')
   })
   }
+  //ece
     
     //grid
     handleCallback = (childData) =>{
@@ -119,8 +119,8 @@ class App extends React.Component{
          <DatabaseSelection 
               pCallback = {this.handleDatabaseSelection}
         />
-
-<input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
+        
+        <input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
          <div class="form-group">
          <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded,2) }%</Progress>
          </div>
@@ -129,7 +129,14 @@ class App extends React.Component{
           <ToastContainer />
           </div>
                   
-        
+        <div className='main--checkbox'>
+        {this.state.uploaded ? 
+              <AttributeSelection 
+                parentCallback = {this.handleCallback}
+                attributeList = {this.state.databaseAttributes}
+              /> : <p>-</p>
+        }
+        </div>
 
         
         
@@ -152,10 +159,7 @@ class App extends React.Component{
 
              <div className='img-grid'>
                {data}
-               
-               
              </div>
-             
  
             
 

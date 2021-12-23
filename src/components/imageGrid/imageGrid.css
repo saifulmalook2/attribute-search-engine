@@ -12,7 +12,10 @@
 .card--image {
     width: 100%;
     border-radius: 9px;
+   
     
+    border: solid red;
+    border-width: 2px;
 }
 
 .img-grid {

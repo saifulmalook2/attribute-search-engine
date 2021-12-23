@@ -9,9 +9,13 @@ export default function ImageCard(props) {
 
 
     let results= []
+    
     const [model, setModel] = useState(false);
     const [tempimgSrc, setTempimgSrc] = useState('');
     const [TextValue, setTextValue] = useState(results);
+
+    
+    const [ClickedImagesList, setClickedImages] = useState([]);
 
     const submitValue = () => {
         const fromdetails = {
@@ -60,20 +64,10 @@ export default function ImageCard(props) {
 
 
     const getImg = (image) =>{
-        setTempimgSrc(image);
-        
-        fetch(`http://localhost:3001/faces/api/v1/search/${image}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log("att list");
-                console.log(data);
-               
-                 for (let i = 0; i< data.length; i++){
-                    results[i] = data[i]
-                 }
+       
+        setClickedImages(prevList => [...prevList,image])
+        console.log(ClickedImagesList)
 
-                setModel(true);
-            })
         
     }
     
@@ -125,7 +119,7 @@ export default function ImageCard(props) {
                     </div>
 
         </div>
-        <div className="card" className="pics" key={props.image_id} onClick={()=>getImg(props.image_id)}>
+        <div className="card" className="pics" key={props.image_id} onClick={()=>getImg(props.image_id)} >
             <img src={`../images/${props.image_id}`} className="card--image" />
         </div>
         </>

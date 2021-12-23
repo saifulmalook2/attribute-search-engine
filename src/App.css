@@ -30,8 +30,14 @@ body {
   max-width: 20%;
   position: -webkit-sticky; /* Safari */
   position: sticky;
+  height:fit-content;
   
   
 }
 
  
+.hover-button{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px,
+}
