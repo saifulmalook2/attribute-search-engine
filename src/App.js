@@ -120,14 +120,14 @@ class App extends React.Component{
               pCallback = {this.handleDatabaseSelection}
         />
 
-<input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
+      <input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
          <div class="form-group">
          <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded,2) }%</Progress>
          </div>
          <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
          <div class="form-group">
-          <ToastContainer />
-          </div>
+         <ToastContainer />
+         </div>
                   
         
 

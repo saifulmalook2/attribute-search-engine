@@ -11,9 +11,12 @@ class AttributeSelection extends React.Component {
     this.state = {
       checkboxList: props.attributeList,
       finalAttributeList: null,
+      selectionList: []
+
+
      
     };
-
+    this.click = this.click.bind(this)
     console.log(this.state.checkboxList)
   }
 
@@ -46,6 +49,22 @@ class AttributeSelection extends React.Component {
     
   }
 
+  click (id){
+    console.log(id)
+    let newElement ={ img_id : id ,selected : true}
+    this.setState(prevState => ({selectionList:[...prevState.selectionList,newElement]}
+        ),function(){ console.log(this.state.selectionList) });
+
+        //[{img_id: '000003.jpg', selected: true}]
+  }
+
+  clickNone (id){
+    console.log(id)
+    console.log("SMARRRRTTT BITCHESSS U GOO ")
+
+    
+  }
+
   handleOnSubmit(){
     console.log(this.state.finalAttributeList);
     
@@ -64,8 +83,13 @@ class AttributeSelection extends React.Component {
         .then(res => res.json())
         .then(data => {
           let results = data.map((img) =>{
+            let check = (this.state.finalAttributeList.length === 1)
+            console.log(check)
             return (
-                <ImageCard key={img.image_id} image_id = {img.image_id}/>
+               check?
+                <ImageCard key={img.image_id} image_id = {img.image_id} onClick={this.click}/>
+                :
+                <ImageCard key={img.image_id} image_id = {img.image_id} onClick ={this.clickNone}/>
             )
           })
           this.props.parentCallback(results);
@@ -80,12 +104,7 @@ class AttributeSelection extends React.Component {
 
   
   render() {
-    return (
-      
-        
-          
-            
-              
+    return (            
               <div className = "table-container">
               <div>
               <div className = "checkbox">
