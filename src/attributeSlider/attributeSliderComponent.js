@@ -2,7 +2,7 @@ import React from "react";
 import "./attributeSlider.css"
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import RangeSlider from 'react-bootstrap-range-slider';
-import NoSelect from "./noselect";
+
 class CheckboxComponent extends React.Component {
 
   render() {

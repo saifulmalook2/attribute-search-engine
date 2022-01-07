@@ -2,20 +2,21 @@ import {React, useState} from "react"
 import CloseIcon from '@material-ui/icons/Close';
 import "./imageGrid.css"
 import TextField from '@material-ui/core/TextField';
-import { Style } from "@material-ui/icons";
+// import { Style } from "@material-ui/icons";
 
 export default function ImageCard(props) {
 
 
 
     let results= []
+    let r= []
+    
     
     const [model, setModel] = useState(false);
     const [tempimgSrc, setTempimgSrc] = useState('');
     const [TextValue, setTextValue] = useState(results);
-
     
-    const [ClickedImagesList, setClickedImages] = useState([]);
+
 
     const submitValue = () => {
         const fromdetails = {
@@ -55,26 +56,26 @@ export default function ImageCard(props) {
     function closeImageEdit()
     {
         setModel(false)
-        // redirect the query back
+        //redirect the query back
         //props.attribute 
 
     }
 
-    
+    function queryList  (parameter) 
+    {
+      r.push(parameter) 
+      
 
-
+    }
     const getImg = (image) =>{
-       
-        setClickedImages(prevList => [...prevList,image])
-        console.log(ClickedImagesList)
-
-        
+      //as soon as its clicked send this image to another component where it saves each sent value to a list
+      queryList(image);
     }
     
+  
     return (
         <>
         <div className={model? "model open":"model"}>
-
                 <div className="container">
                     <div className="row justify-content-md-center">
                         
@@ -119,9 +120,12 @@ export default function ImageCard(props) {
                     </div>
 
         </div>
-        <div className="card" className="pics" key={props.image_id} onClick={()=>getImg(props.image_id)} >
+        
+        <div className="highlight"className="card" className="pics" key={props.image_id} onClick={() => props.onClick(props.image_id)} >
             <img src={`../images/${props.image_id}`} className="card--image" />
         </div>
+     
+        
         </>
         
     )

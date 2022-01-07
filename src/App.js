@@ -3,7 +3,6 @@ import NavBar from './components/navBar/navBar.js';
 import './App.css';
 import DatabaseSelection from './DatabaseSelection';
 import AttributeSelection from './attributeSlider/attributeSlider.js';
-import {Routes, Route} from 'react-router-dom'
 import Noselection from './noselection'
 import axios from 'axios';
 import {Progress} from 'reactstrap';
@@ -17,7 +16,9 @@ class App extends React.Component{
     this.state = {
         data: null,
         databaseAttributes: null,
-        isAttributeListPassed: false
+        possibleAttributeValues: [],
+        isAttributeListPassed: false,
+        uploaded: false,
     }
 
   }
@@ -49,7 +50,9 @@ class App extends React.Component{
   })
   .then(res => { // then print response status
     toast.success('upload success')
-    this.state.uploaded=true;
+    this.setState({
+      uploaded: true,
+    })
   })
   .catch(err => { 
       toast.error('upload fail')
@@ -98,7 +101,8 @@ class App extends React.Component{
 
        
         this.setState({
-          databaseAttributes: attributes
+          databaseAttributes: attributes,
+          possibleAttributeValues: databaseSelect[1],
         })
         this.setState({
           isAttributeListPassed: true
@@ -128,16 +132,13 @@ class App extends React.Component{
          <div class="form-group">
           <ToastContainer />
           </div>
-                  
-        
-
-        
-        
+    
         <div className='main--checkbox'>
         {this.state.isAttributeListPassed ? 
               <AttributeSelection 
                 parentCallback = {this.handleCallback}
                 attributeList = {this.state.databaseAttributes}
+                possibleVal = {this.state.possibleAttributeValues}
               /> :
               <div style={{marginLeft:'220%'}}>
               <Noselection />

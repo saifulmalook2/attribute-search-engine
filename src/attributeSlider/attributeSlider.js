@@ -9,11 +9,14 @@ class AttributeSelection extends React.Component {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.state = {
+      possible: props.possibleVal,
       checkboxList: props.attributeList,
       finalAttributeList: null,
-     
+      selectionList: [],
+      allImages:[],
+      
     };
-
+    this.click = this.click.bind(this)
     console.log(this.state.checkboxList)
   }
 
@@ -46,6 +49,118 @@ class AttributeSelection extends React.Component {
     
   }
 
+  click (id){
+    if(this.state.selectionList.includes(id))
+    {
+    
+      let newA = this.state.selectionList
+      let index = newA.indexOf(id)
+      newA.splice(index,1)
+
+      this.setState({ 
+        selectionList: newA,
+      })
+      
+    }
+    else if ((!(this.state.selectionList.includes(id))))
+    {
+      this.setState(prevState => ({
+        selectionList: [...prevState.selectionList,id],
+      }),
+      function(){ 
+        console.log(this.state.selectionList)
+
+       });
+    }
+  }
+
+  clickNone (id){
+    console.log(id)
+  }
+
+  submitSelect(){
+    let possibleInts = this.state.possible
+    let min = possibleInts[0]
+    let max = possibleInts[1]
+    let minString = min.toString()
+    let maxString = max.toString()
+    let finalList = []
+
+
+    if(this.state.selectionList.length !== 0){
+      for (let index = 0; index < this.state.selectionList.length; index++) {
+
+        const option = {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          }
+      }
+        fetch(`http://localhost:3001/faces/api/v1/search/${this.state.selectionList[index]}`, option)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            finalList = data
+            //data we have to look for 1 searched att and flip its value
+            let changeIndex = data.indexOf(this.state.finalAttributeList[0])
+            //console.log(data[changeIndex])
+            let equalIndex = data[changeIndex].indexOf("=")
+            let remain = data[changeIndex].substring(0,equalIndex+1)
+            //console.log(remain)
+            let currentVal = data[changeIndex].substring(equalIndex+1)
+            let IntCurr = parseInt(currentVal)
+            let final = ""
+
+            
+            if(possibleInts.length === 2)
+            {
+              if(IntCurr === min)
+              {
+                final = remain+maxString
+              }
+              else if (IntCurr === max)
+              {
+                final = remain+minString
+              }
+            }
+
+            finalList[changeIndex]=final
+            //console.log(finalList)
+             
+              const opt = {
+                method: "PUT",
+                body: JSON.stringify(finalList),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+            console.log(opt.body)
+        
+          fetch(`http://localhost:3001/faces/api/v1/search/${this.state.selectionList[index]}`, opt)
+              .then(res => res.json())
+              .then(data1 => {
+                  console.log(data1)
+                  if( data1 === 'OK')
+                  {
+                      console.log("Updated")
+                  }
+                  else{
+                      console.log(data1)
+                  }
+              })
+
+        })
+  
+      }
+   
+        
+      }
+
+
+
+      
+  }
+
   handleOnSubmit(){
     console.log(this.state.finalAttributeList);
     
@@ -63,9 +178,23 @@ class AttributeSelection extends React.Component {
     fetch("http://localhost:3001/faces/api/v1/search", options)
         .then(res => res.json())
         .then(data => {
-          let results = data.map((img) =>{
+          let allImagedata = data.map((imag) =>{
             return (
-                <ImageCard key={img.image_id} image_id = {img.image_id}/>
+              imag.image_id
+            )
+          })
+          this.setState({
+            allImagedata: allImagedata
+          })
+          
+          let results = data.map((img) =>{
+            let check = (this.state.finalAttributeList.length === 1)
+            console.log(check)
+            return (
+               check?
+                <ImageCard key={img.image_id} image_id = {img.image_id} onClick={this.click} />
+                :
+                <ImageCard key={img.image_id} image_id = {img.image_id} onClick ={this.clickNone}  />
             )
           })
           this.props.parentCallback(results);
@@ -77,18 +206,15 @@ class AttributeSelection extends React.Component {
     }
 
   }
-
+ 
   
   render() {
-    return (
-      
-        
-          
-            
-              
+    return (            
               <div className = "table-container">
               <div>
               <div className = "checkbox">
+              <button style={{marginLeft:"88vw", fontSize:"100%", width:"50%"}} class="btn btn-danger" onClick={this.submitSelect.bind(this)}>Submit Selections!</button>
+
       
               <table className="table table-style" >
 
