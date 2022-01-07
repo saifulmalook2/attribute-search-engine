@@ -11,12 +11,11 @@ class AttributeSelection extends React.Component {
     this.state = {
       checkboxList: props.attributeList,
       finalAttributeList: null,
-      selectionList: []
-
-
-     
+      selectionList: [],
+      allImages:[]
     };
     this.click = this.click.bind(this)
+    
     console.log(this.state.checkboxList)
   }
 
@@ -51,18 +50,12 @@ class AttributeSelection extends React.Component {
 
   click (id){
     console.log(id)
-    let newElement ={ img_id : id ,selected : true}
-    this.setState(prevState => ({selectionList:[...prevState.selectionList,newElement]}
+    this.setState(prevState => ({selectionList:[...prevState.selectionList,id]}
         ),function(){ console.log(this.state.selectionList) });
-
-        //[{img_id: '000003.jpg', selected: true}]
   }
 
   clickNone (id){
     console.log(id)
-    console.log("SMARRRRTTT BITCHESSS U GOO ")
-
-    
   }
 
   handleOnSubmit(){
@@ -82,17 +75,27 @@ class AttributeSelection extends React.Component {
     fetch("http://localhost:3001/faces/api/v1/search", options)
         .then(res => res.json())
         .then(data => {
+          let allImagedata = data.map((imag) =>{
+            return (
+              imag.image_id
+            )
+          })
+          this.setState({
+            allImagedata: allImagedata
+          })
+          
           let results = data.map((img) =>{
             let check = (this.state.finalAttributeList.length === 1)
             console.log(check)
             return (
                check?
-                <ImageCard key={img.image_id} image_id = {img.image_id} onClick={this.click}/>
+                <ImageCard key={img.image_id} image_id = {img.image_id} onClick={this.click} allImg = {this.state.allImagedata}/>
                 :
-                <ImageCard key={img.image_id} image_id = {img.image_id} onClick ={this.clickNone}/>
+                <ImageCard key={img.image_id} image_id = {img.image_id} onClick ={this.clickNone} allImg = {this.state.allImagedata}/>
             )
           })
           this.props.parentCallback(results);
+          console.log(this.state.allImagedata)
           
         })
     }
@@ -108,7 +111,7 @@ class AttributeSelection extends React.Component {
               <div className = "table-container">
               <div>
               <div className = "checkbox">
-      
+              <button style={{marginLeft: '100vw', fontSize:"100%", width:"50%"}} class="btn btn-danger" onClick={this.submitSelect}>Submit Selections!</button>
               <table className="table table-style" >
 
                 <thead className="thead-dark">

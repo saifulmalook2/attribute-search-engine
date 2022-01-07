@@ -149,7 +149,7 @@ class App extends React.Component{
         <div className="main--container">
            
             
-
+             
              <div className='img-grid'>
                {data}
                

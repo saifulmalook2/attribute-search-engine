@@ -107,13 +107,16 @@ export default function ImageCard(props) {
 
         </div>
 
-        {/* for (let index = 0; index < selectionlist.length; index++) {
-          if (selectionlist[index].id === props.image_id) {
-            //make the div with highlighted border
-          }
-          else{
-            //make the normal div
-          }
+        
+        {/* {
+          for (let index = 0; index < props.allImg.length; index++) {
+            for (let i = 0; i < selectionList.length; i++) {
+              if (selectionlist[i].id === props.allImg[index]) {
+                //make the div with highlighted border passing props.allImg[index] as the image id
+              }
+            }
+            //make a normal div here v
+            
         } */}
         
 
