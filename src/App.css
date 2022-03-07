@@ -16,12 +16,15 @@ body {
 
 
 .main--container{
-  padding-left: 30%;
+  padding-left: 21%;
   
   padding-top: 2%;
   
+  max-width: 90%;
   
 }
+
+.rowC{display:flex; flex-direction:row;}
 
 .main--checkbox{
   
@@ -33,8 +36,16 @@ body {
   height:fit-content;
   
   
+  
 }
 
+.container1{
+  max-width: 70%;
+}
+
+.container2{
+  max-width: 30%;
+}
  
 .hover-button{
   position: -webkit-sticky;

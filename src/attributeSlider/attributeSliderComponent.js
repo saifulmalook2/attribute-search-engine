@@ -2,7 +2,7 @@ import React from "react";
 import "./attributeSlider.css"
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import RangeSlider from 'react-bootstrap-range-slider';
-import NoSelect from "./noselect";
+
 class CheckboxComponent extends React.Component {
 
   render() {
@@ -24,10 +24,10 @@ class CheckboxComponent extends React.Component {
                 
               </td>
 
-              <td >
+              <td style={{width:'200px'}}>
                 
                         <RangeSlider
-                        style={{alignItems:'end'}}
+                        style={{maxWidth:'200px', marginRight:'0px'}}
                         className="slider" 
                         min={option.min}
                         max={option.max}
@@ -35,8 +35,6 @@ class CheckboxComponent extends React.Component {
                         tooltipPlacement = "bottom"
                         value={option.value}
                         onChange={(e) => this.props.onChange(e,option)}
-                        
-                       
                         />
                 
               </td>

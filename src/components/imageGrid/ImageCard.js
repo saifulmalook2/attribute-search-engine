@@ -2,16 +2,19 @@ import {React, useState} from "react"
 import CloseIcon from '@material-ui/icons/Close';
 import "./imageGrid.css"
 import TextField from '@material-ui/core/TextField';
-import { Style } from "@material-ui/icons";
+// import { Style } from "@material-ui/icons";
 
 export default function ImageCard(props) {
     let results= []
     let r= []
-
+   
+    
+    
     const [model, setModel] = useState(false);
     const [tempimgSrc, setTempimgSrc] = useState('');
     const [TextValue, setTextValue] = useState(results);
-    const [ClickedImagesList, setClickedImages] = useState([]);
+    
+
 
     const submitValue = () => {
         const fromdetails = {
@@ -56,7 +59,16 @@ export default function ImageCard(props) {
 
     }
 
-    
+    function queryList  (parameter) 
+    {
+      r.push(parameter) 
+      
+
+    }
+    const getImg = (image) =>{
+      //as soon as its clicked send this image to another component where it saves each sent value to a list
+      queryList(image);
+    }
     
   
     return (
@@ -106,28 +118,14 @@ export default function ImageCard(props) {
                     </div>
 
         </div>
-
         
-        {/* {
-          for (let index = 0; index < props.allImg.length; index++) {
-            for (let i = 0; i < selectionList.length; i++) {
-              if (selectionlist[i].id === props.allImg[index]) {
-                //make the div with highlighted border passing props.allImg[index] as the image id
-              }
-            }
-            //make a normal div here v
-            
-        } */}
-        
+        <div className="highlight"className="card" className="pics" key={props.image_id} onClick={() => props.onClick(props.image_id)} >
 
-        <div className="card"
-         className="pics" 
-         key={props.image_id}
-          
-          onClick={() => props.onClick(props.image_id)} 
-          >
-            <img src={`../images/${props.image_id}`} className="card--image" />
+                <img src={`../images/${props.image_id}`} className="card--image" />
+    
         </div>
+     
+        
         </>
         
     )

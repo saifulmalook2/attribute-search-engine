@@ -9,21 +9,48 @@
     
 }
 
+.card2 {
+    width: 90px;
+    
+    padding-right: 0;
+    display:inline-block;
+}
 .card--image {
     width: 100%;
     border-radius: 9px;
-   
-    
-    border: solid red;
-    border-width: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-right: 2px;
+    padding-left: 2px;
+    border-width: 5px;
 }
+.card--himage {
+    width: 90px;
+    border-radius: 9px;
+    border-width: 5px;
+    display:inline-block;
 
+    
+}
+.card--image:hover{
+    opacity: .73;
+ 
+}
 .img-grid {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row; 
+  
 }
-
+.img-grid2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; 
+    width: "";
+  }
+.highlight{
+    border-color: red;
+}
 .cont{
     width: 800px;
     height: auto;
