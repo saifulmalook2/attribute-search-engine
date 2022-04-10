@@ -12,16 +12,16 @@ class Navbar extends Component {
 
     render() {
         return(
-            <nav className= "NavbarItems">
+            <nav className= "navbar navbar-expand-lg navbar-light bg-light">
                 <h1 className="navbar-logo">
-                     Attribute Search Engine
+                     Attribute 
+                     <span className="navbar-logo2"> Search Engine</span>
+                     
                 </h1>
-                <div className="menu-icon" onClick = {this.handleClick}>
-                    <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
-                    
-                </div>
+                
                 <ul className= {this.state.clicked ? 'nav-menu active' : 'nav-menu' }>
 
+                
                 {MenuItems.map( (item, index) => {
                             return (
                                 <li key={index}>

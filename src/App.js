@@ -123,9 +123,10 @@ class App extends React.Component{
 
     return (
       
-      <div >
+      <div className='app-main' >
 
          <NavBar/>
+         
          <DatabaseSelection 
               pCallback = {this.handleDatabaseSelection}
         />
@@ -149,7 +150,7 @@ class App extends React.Component{
                 
               /> :
               <div style={{marginLeft:'220%'}}>
-              <Noselection />
+              
               </div>
         }
         </div>
@@ -160,14 +161,14 @@ class App extends React.Component{
 
           <div className="row" style={{width:'100%'}}>
 
-            <div className="col-xs-10 col-sm-7" >
+            <div className="col-xs-12 col-sm-6" style={{marginLeft:"11%"}} >
             <div className='img-grid' >
                   {data}
                 </div>
             </div>
 
-            <div className='col-xs-10 col-sm-3' >
-            <div className='img-grid' >
+            <div className='col-sm-4' >
+            <div  >
                   {selectedImages}
             </div>
             </div>

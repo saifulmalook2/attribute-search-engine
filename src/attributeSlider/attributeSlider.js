@@ -5,7 +5,7 @@ import ImageCard from '../components/imageGrid/ImageCard';
 import ImageCard2 from '../components/imageGrid/imageCard2';
 
 import  '../components/imageGrid/imageGrid.css';
-
+import './attributeSlider.css'
 
 class AttributeSelection extends React.Component {
 
@@ -237,18 +237,23 @@ class AttributeSelection extends React.Component {
 
   }
  
+
+
   
   render() {
-    return (            
-              <div className = "table-container">
+    return (     
               <div>
-              <div className = "checkbox">
-              <button style={{marginLeft:"88vw", fontSize:"100%", width:"50%"}} class="btn btn-danger" onClick={this.submitSelect.bind(this)}>Submit Selections!</button>
+              <button className="button"  onClick={this.submitSelect.bind(this)}>Submit Changes!</button>      
+              <div className = "table-container" style={{overflow:"scroll"}}>
+             
+
+              <div>
+              <div>
 
       
-              <table className="table table-style" >
+              <table className="table" >
 
-                <thead className="thead-dark">
+                <thead className="heading">
 
                   <tr>
                     
@@ -268,7 +273,7 @@ class AttributeSelection extends React.Component {
             </div>
           
        
-      
+      </div> 
       
     );
   }

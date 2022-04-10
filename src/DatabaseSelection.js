@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import './App.css'
+import celeba from "./0_6O-ThX64j_8P5lTY.png";
+import lfwa from "./Samples-from-LFWA-dataset-21.png";
+
 
 class DatabaseSelection extends Component {
   constructor(props) {
@@ -44,40 +47,52 @@ class DatabaseSelection extends Component {
     return (
       <form onSubmit={this.formSubmit}>
 
-      <div class="container" style={{backgroundColor:'#ffcccc', fontSize:'20px', maxWidth:'50%', borderRadius:'20px'}}>
-        <div class="row">
-          <div class="col" style={{marginLeft:'150px'}}>
-          <label >
-            <input
-              type="radio"
-              value= "CelebA"
-              checked={this.state.selectedOption === "CelebA"}
-              onChange={this.onValueChange}
-            />
-            CelebA
-          </label>
-          </div>
-          <div class="col">
-          <label>
-            <input 
-              type="radio"
-              value= 'LFWA'
-              checked={this.state.selectedOption === 'LFWA'}
-              onChange={this.onValueChange}
-            />
-            LFWA
-          </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col" style={{marginLeft:'45%', fontSize:'30px'}}>
-          <button className="btn btn-primary btn-lg" type="submit">
+
+      <div class="page-section" className="db_select">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6" >
+                <div class="card-service wow fadeInUp" >
+                  <div class="header">
+                  <img src={celeba} width="200px"/>
+                  </div>
+                  <div class="body">
+                    <h3 class="text-secondary">CelebA</h3>
+                    <h5>A large-scale face attributes dataset with more than 200K celebrity images, each with 40 attribute annotations.</h5>
+                    <input
+                  type="radio"
+                  value= "CelebA"
+                  checked={this.state.selectedOption === "CelebA"}
+                  onChange={this.onValueChange}
+                />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card-service wow fadeInUp">
+                  <div class="header">
+                    <img src={lfwa} alt="" width="200px" className="img"/>
+                  </div>
+                  <div class="body">
+                    <h3 class="text-secondary" >LFWA</h3>
+                    <h5>Labeled Faces in the Wild (LFWA) is a database of face photographs designed for studying the problem of unconstrained face recognition</h5>
+                    <input 
+                    type="radio"
+                    value= 'LFWA'
+                    checked={this.state.selectedOption === 'LFWA'}
+                    onChange={this.onValueChange}
+                  />
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <button className="btn btn-primary btn-lg" className="center" type="submit">
           Submit
         </button>
-        </div>
+          </div> 
           
-        </div>
-      </div>
+        </div> 
       </form>
     );
   }

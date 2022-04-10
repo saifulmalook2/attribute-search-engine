@@ -11,23 +11,25 @@ class CheckboxComponent extends React.Component {
       <>
         
         {checkboxList.map((option) => (
-        <div className = "checkbox"  key={option.id}>
+        <div key={option.id}>
       
-        <table className="table table-style" >
+        <table className="table" >
 
-          <tbody>
+          <tbody className="attributes">
 
             <tr >
 
               <td htmlFor={option.id} style={{marginLeft:'0px'}}>
-                <h1>{option.name}</h1>
+                <text className="attributes-list">{option.name}</text>
                 
               </td>
 
-              <td style={{width:'200px'}}>
+              <td >
                 
                         <RangeSlider
-                        style={{maxWidth:'200px', marginRight:'0px'}}
+                        style={{maxWidth:'100%', marginRight:'0px', color:"black"}}
+                        color="black"
+                        backgroundcolor="black"
                         className="slider" 
                         min={option.min}
                         max={option.max}
