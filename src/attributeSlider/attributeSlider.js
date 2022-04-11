@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import CheckboxComponent from "./attributeSliderComponent.js";
 import ImageCard from '../components/imageGrid/ImageCard';
 import ImageCard2 from '../components/imageGrid/imageCard2';
-
+import { Link } from "react-router-dom";
 import  '../components/imageGrid/imageGrid.css';
 import './attributeSlider.css'
 
@@ -18,6 +18,7 @@ class AttributeSelection extends React.Component {
       finalAttributeList: null,
       selectionList: [],
       allImages:[],
+
       
     };
     this.click = this.click.bind(this)
@@ -54,7 +55,7 @@ class AttributeSelection extends React.Component {
   }
 
   click (id){
-    if(this.state.selectionList.includes(id))
+    if(this.state.selectionList.length===1)
     {
     
       let newA = this.state.selectionList
@@ -78,7 +79,7 @@ class AttributeSelection extends React.Component {
       })
       
     }
-    else if ((!(this.state.selectionList.includes(id))))
+    else if (this.state.selectionList.length ===0)
     {
       this.setState(prevState => ({
         selectionList: [...prevState.selectionList,id],
@@ -113,8 +114,9 @@ class AttributeSelection extends React.Component {
     let minString = min.toString()
     let maxString = max.toString()
     let finalList = []
-
-
+    
+    
+    /*
     if(this.state.selectionList.length !== 0){
       for (let index = 0; index < this.state.selectionList.length; index++) {
 
@@ -184,8 +186,7 @@ class AttributeSelection extends React.Component {
         
       }
 
-
-
+      */
       
   }
 
@@ -216,15 +217,14 @@ class AttributeSelection extends React.Component {
           })
           
           let results = data.map((img) =>{
-            let check = (this.state.finalAttributeList.length === 1)
-            let check1 = this.state.selectionList.includes(img.image_id)
+            //let check = (this.state.finalAttributeList.length === 1)
+            //let check1 = this.state.selectionList.includes(img.image_id)
             console.log("id of all",img.image_id)
             
             return (
-               check?
+               
                 <ImageCard key={img.image_id} image_id = {img.image_id} onClick={this.click} list= {this.state.selectionList}/>
-                :
-                <ImageCard key={img.image_id} image_id = {img.image_id} onClick ={this.clickNone}  list= {[]}  />
+                
             )
           })
           this.props.parentCallback(results);
@@ -243,7 +243,7 @@ class AttributeSelection extends React.Component {
   render() {
     return (     
               <div>
-              <button className="button"  onClick={this.submitSelect.bind(this)}>Submit Changes!</button>      
+              <Link to="/SameImage"className="button"  onClick={this.submitSelect.bind(this)}>Submit Changes!</Link>      
               <div className = "table-container" style={{overflow:"scroll"}}>
              
 

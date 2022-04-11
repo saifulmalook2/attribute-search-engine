@@ -3,26 +3,26 @@ import NavBar from './components/navBar/navBar.js';
 import './App.css';
 import DatabaseSelection from './DatabaseSelection';
 import AttributeSelection from './attributeSlider/attributeSlider.js';
-import {Routes, Route} from 'react-router-dom'
 import Noselection from './noselection'
 import axios from 'axios';
 import {Progress} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-class App extends React.Component{
+
+class App_main extends React.Component{
   constructor(props){
     super(props);
     this.state = {
         data: null,
         databaseAttributes: null,
+        possibleAttributeValues: [],
         isAttributeListPassed: false,
-        uploaded: false
+        uploaded: false,
+        selectedImages: []
     }
 
   }
-
-  //ece
   onChangeHandler=event=>{
     var files = event.target.files
     //if(this.maxSelectFile(event) && this.checkMimeType(event) && this.checkFileSize(event)){ 
@@ -34,12 +34,15 @@ class App extends React.Component{
 }
 
   onClickHandler = () => {
-    const data = new FormData()
+    let data1 =[]
+    data1 = new FormData()
     for(var x = 0; x<this.state.selectedFile.length; x++) {
-        data.append('file', this.state.selectedFile[x])
+        data1.append('file', this.state.selectedFile[x])
     }
+    console.log("data111===")
+    console.log(data1)
     
-   axios.post("http://localhost:3001/faces/api/v1/upload", data, {
+   axios.post("http://localhost:3001/faces/api/v1/upload", data1, {
          onUploadProgress: ProgressEvent => {
            this.setState({
              loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
@@ -48,17 +51,21 @@ class App extends React.Component{
   })
   .then(res => { // then print response status
     toast.success('upload success')
-    this.state.uploaded=true;
+    this.setState({
+      uploaded: true,
+    })
   })
   .catch(err => { 
       toast.error('upload fail')
   })
   }
-  //ece
     
     //grid
     handleCallback = (childData) =>{
     this.setState({data: childData})}
+
+    handleCallback2 = (cData) =>{
+      this.setState({selectedImages: cData})}
 
     //attributeslider 
     handleDatabaseSelection = (databaseSelect) =>{
@@ -98,7 +105,8 @@ class App extends React.Component{
 
        
         this.setState({
-          databaseAttributes: attributes
+          databaseAttributes: attributes,
+          possibleAttributeValues: databaseSelect[1],
         })
         this.setState({
           isAttributeListPassed: true
@@ -111,16 +119,19 @@ class App extends React.Component{
   render(){
 
     const {data} = this.state;
+    const {selectedImages} = this.state;
+
     return (
       
-      <div >
+      <div className='app-main' >
 
          <NavBar/>
+         
          <DatabaseSelection 
               pCallback = {this.handleDatabaseSelection}
         />
-        
-        <input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
+
+      <input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
          <div class="form-group">
          <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded,2) }%</Progress>
          </div>
@@ -128,26 +139,18 @@ class App extends React.Component{
          <div class="form-group">
           <ToastContainer />
           </div>
-                  
-        <div className='main--checkbox'>
-        {this.state.uploaded ? 
-              <AttributeSelection 
-                parentCallback = {this.handleCallback}
-                attributeList = {this.state.databaseAttributes}
-              /> : <p>-</p>
-        }
-        </div>
-
-        
-        
+    
         <div className='main--checkbox'>
         {this.state.isAttributeListPassed ? 
               <AttributeSelection 
                 parentCallback = {this.handleCallback}
+                parentCallback2 = {this.handleCallback2}
                 attributeList = {this.state.databaseAttributes}
+                possibleVal = {this.state.possibleAttributeValues}
+                
               /> :
               <div style={{marginLeft:'220%'}}>
-              <Noselection />
+              
               </div>
         }
         </div>
@@ -155,14 +158,24 @@ class App extends React.Component{
         
         <div className="main--container">
            
-            
 
-             <div className='img-grid'>
-               {data}
-             </div>
- 
-            
+          <div className="row" style={{width:'100%'}}>
 
+            <div className="col-xs-12 col-sm-6" style={{marginLeft:"11%"}} >
+            <div className='img-grid' >
+                  {data}
+                </div>
+            </div>
+
+            <div className='col-sm-4' >
+            <div  >
+                  {selectedImages}
+            </div>
+            </div>
+
+          </div>
+            
+          
         </div>
 
       </div> 
@@ -173,6 +186,6 @@ class App extends React.Component{
   }
   
 }
-export default App;
+export default App_main;
 
 /*  */
